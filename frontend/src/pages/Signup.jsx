@@ -9,17 +9,53 @@ function Signup() {
     fullName: '',
   });
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Signup attempt:', { ...formData, agreeToTerms });
+
+    // Check if passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          password: formData.password,
+          agreeToTerms,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Signup failed');
+      }
+
+      setSuccess('Account created successfully! You can now login.');
+      setError(null);
+      setFormData({ email: '', password: '', confirmPassword: '', fullName: '' });
+      setAgreeToTerms(false);
+    } catch (err) {
+      setError(err.message);
+      setSuccess(null);
+    }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -36,6 +72,9 @@ function Signup() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10">
+          {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+          {success && <p className="text-green-500 text-center mb-4">{success}</p>}
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
@@ -126,8 +165,8 @@ function Signup() {
                 I agree to the{' '}
                 <a href="#" className="text-indigo-600 hover:text-indigo-500">
                   Terms of Service
-                </a>
-                {' '}and{' '}
+                </a>{' '}
+                and{' '}
                 <a href="#" className="text-indigo-600 hover:text-indigo-500">
                   Privacy Policy
                 </a>
@@ -150,15 +189,14 @@ function Signup() {
                 <div className="w-full border-t border-gray-300" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
-                  Already have an account?
-                </span>
+                <span className="px-2 bg-white text-gray-500">Already have an account?</span>
               </div>
             </div>
             <div className="mt-6">
               <Link
                 to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-indigo-600 rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                className="w-full flex justify-center py-2 px-4 border border-indigo-600 rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+
               >
                 Sign in instead
               </Link>

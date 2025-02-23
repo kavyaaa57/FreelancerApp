@@ -5,6 +5,7 @@ function Navbar() {
     <nav className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
+          {/* Left Section - Logo */}
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="text-xl font-bold text-indigo-600">
@@ -12,28 +13,30 @@ function Navbar() {
               </Link>
             </div>
           </div>
+
+          {/* Middle Section - Main Links */}
           <div className="flex items-center">
-            <Link
-              to="/login" className="ml-8 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50"
-            >
-              Sign in
-            </Link>
-            <Link
-              to="/signup" className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-            >
-              Sign up
-            </Link>
-            <Link to="/jobs" className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+            <Link to="/jobs" className="ml-8 px-4 py-2 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
               Find Jobs
             </Link>
-            <Link to="/dashboard" className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+            <Link to="/dashboard" className="ml-8 px-4 py-2 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
               Dashboard
             </Link>
-            <Link to="/notifications" className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+            <Link to="/notifications" className="ml-8 px-4 py-2 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
               Notifications
             </Link>
-            <Link to="/settings" className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+            <Link to="/settings" className="ml-8 px-4 py-2 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
               Settings
+            </Link>
+          </div>
+
+          {/* Right Section - Auth Buttons */}
+          <div className="flex items-center">
+            <Link to="/login" className="ml-8 px-4 py-2 text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50">
+              Sign In
+            </Link>
+            <Link to="/signup" className="ml-4 px-4 py-2 text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">
+              Sign Up
             </Link>
           </div>
         </div>
